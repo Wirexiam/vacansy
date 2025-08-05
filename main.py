@@ -58,14 +58,15 @@ with col2:
     st.metric("✅ Успешных", len(success))
 
 with col3:
-    subset = df[df["call_status"].isin(["Дозвон, Успешно", "Дозвон, Отказ"])]
-    success = subset[subset["call_status"] == "Дозвон, Успешно"]
-    refused = subset[subset["call_status"] == "Дозвон, Отказ"]
+    conv_subset = filtered_df[filtered_df["call_status"].isin(["Дозвон, Успешно", "Дозвон, Отказ"])]
+    success = conv_subset[conv_subset["call_status"] == "Дозвон, Успешно"]
+    refused = conv_subset[conv_subset["call_status"] == "Дозвон, Отказ"]
 
     total = len(success) + len(refused)
     conv = round(len(success) / total * 100, 2) if total > 0 else 0.0
 
     st.metric("Конверсия", f"{conv} %")
+
 
 st.subheader("📊 Распределение звонков по статусам")
 st.bar_chart(filtered_df["call_status"].value_counts())
